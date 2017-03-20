@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="application/x-javascript">
+    addEventListener("load", function() {
+        setTimeout(hideURLbar, 0);
+    }, false);
+
+    function hideURLbar() {
+        window.scrollTo(0, 1);
+    }
+    </script>
+    <title>Brafael Engenharia</title>
+    <meta charset utf="8">
+    <!--Scripts-->
+    <!-- AngularJS 1.5.5 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+    <!-- app.js -->
+    <script src="js/app.js"></script>
+    <!-- directives -->
+    <script src="js/directives/carrinho/carrinho-controller.js"></script>
+    <script src="js/directives/carrinho/item-carrinho-controller.js"></script>
+    <script src="js/directives/produto/detalhe-controller.js"></script>
+    <script src="js/directives/contato-controller.js"></script>
+    <script src="js/directives/home-controller.js"></script>
+    
+    <!-- services -->
+    <script src="js/services/cadastro-service.js"></script>
+    <script src="js/services/login-service.js"></script>
+    <script src="js/services/perfil-service.js"></script>
+    <script src="js/services/carrinho-service.js"></script>
+    <script src="js/services/produto-service.js"></script>
+    <!-- md5 -->
+    <script src="/js/lib/angular-md5.js"></script>
+    <!-- local storage -->
+    <script src="/js/lib/angular-local-storage.js"></script>
+    <!-- satellizer.js -->
+    <script src="js/lib/satellizer.js"></script>
+
+    <!--shop-kart-js-->
+    <script src="js/lib/simpleCart.min.js"></script>
+    <!--default-js-->
+    <script src="js/lib/jquery-2.1.4.min.js"></script>
+    <!--bootstrap-js-->
+    <script src="js/lib/bootstrap.min.js"></script>
+    <!-- FlexSlider -->
+    <script src="js/lib/imagezoom.js"></script>
+    <script defer src="js/lib/jquery.flexslider.js"></script>
+    <script>
+    $(window).load(function() {
+        $('.flexslider').flexslider({
+            animation: "slide",
+            controlNav: "thumbnails"
+        });
+    });
+    </script>
+    <!--css-->
+    <!--bootstrap-->
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <!--coustom css-->
+    <link href="css/style.css" rel="stylesheet" type="text/css"/>
+    <!-- FlexSlider -->
+    <link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen" />
+    <!-- Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+    <link href='//fonts.googleapis.com/css?family=Fredoka+One' rel='stylesheet' type='text/css'>
+</head>
+
+<body ng-app="RafaelShoes" ng-controller="appController as appCtrl">
+    <!-- Header -->
+    <div class="header">
+        <div class="container">
+            <div class="header-top">
+                <div class="logo">
+                    <a ng-click="appCtrl.goTo(home)" role="button">Brafael Engenharia</a>
+                </div>
+                <!-- Login bars deslogado -->
+                <div class="login-bars" ng-if="isLogado == false">
+                    <a class="btn btn-default log-bar" ng-click="appCtrl.goTo(cadastro)" role="button">Cadastre-se</a>
+                    <a class="btn btn-default log-bar" ng-click="appCtrl.goTo(login)" role="button">Login</a>
+                    <div class="cart box_1"></div>
+                </div>
+            <div class="collapse navbar-collapse collapse-pdng" id="bs-example-navbar-collapse-1" style="margin: auto;">
+                <ul class="nav navbar-nav nav-font" style="padding-left: 135px;padding-top: 5px;">
+                    <li><a ng-click="appCtrl.goTo(carrinho)" role="button">Pagamento</a></li>
+                    <div class="clearfix"></div>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <!--/.navbar-collapse-->
+            <div class="clearfix"></div>
+            </nav>
+            <!--/.navbar-->
+            <div class="clearfix"></div>
+        </div>
+        <!--/.content--->
+    </div>
+    <!--header-bottom-->
+    </div>
+    </div>
+    <!-- conteudo da pagina -->
+    <home ng-if="viewFlag == 1"> </home>
+    <detalhe ng-if="viewFlag == 2"> </detalhe>
+    <login ng-if="viewFlag == 3"> </login>
+    <cadastro ng-if="viewFlag == 4"> </cadastro>
+    <produtos ng-if="viewFlag == 5"> </produtos>
+    <contato ng-if="viewFlag == 6"> </contato>
+    <carrinho ng-if="viewFlag == 7"> </carrinho>
+    <esquecisenha ng-if="viewFlag == 8"> </esquecisenha>
+    <minhaconta ng-if="viewFlag == 9"> </minhaconta>
+    <sobrerafael ng-if="viewFlag == 10"> </sobrerafael>
+    <adm ng-if="viewFlag == 11"> </adm>
+    <cadastrarproduto ng-if="viewFlag == 12"> </cadastrarproduto>
+    <buscarproduto ng-if="viewFlag == 13"> </buscarproduto>
+    <removerproduto ng-if="viewFlag == 14"> </removerproduto>
+    <alterarproduto ng-if="viewFlag == 15"> </alterarproduto>
+    <cadastrarfuncionario ng-if="viewFlag == 16"> </cadastrarfuncionario>
+    <buscarfuncionario ng-if="viewFlag == 17"> </buscarfuncionario>
+    <removerfuncionario ng-if="viewFlag == 18"> </removerfuncionario>
+    <alterarfuncionario ng-if="viewFlag == 19"> </alterarfuncionario>
+    <buscarcliente ng-if="viewFlag == 20"> </buscarcliente>
+    <removercliente ng-if="viewFlag == 21"> </removercliente>
+    <supervisor ng-if="viewFlag == 22"> </supervisor>
+    <funcionario ng-if="viewFlag == 23"> </funcionario>
+    <alterarcliente ng-if="viewFlag == 24"> </alterarcliente>
+    <meuspedidos ng-if="viewFlag == 25"> </meuspedidos>
+    <devolucao ng-if="viewFlag == 26"> </devolucao>
+    <checkout ng-if="viewFlag == 27"> </checkout>
+    <cadastrarendereco ng-if="viewFlag == 28"> </cadastrarendereco>
+    <alterarendereco ng-if="viewFlag == 29"> </alterarendereco>
+    <removerendereco ng-if="viewFlag == 30"> </removerendereco>
+    <enderecounico ng-if="viewFlag == 31"> </enderecounico>
+
+
+    <!-- Footer -->
+    <div class="footer-grid">
+    <div class="container">
+        <div class="col-md-2 re-ft-grd">
+            <img width="150px" height="120px" src="images/contrucao2.png"/>
+        </div>
+        <div class="col-md-2 re-ft-grd">
+            <h3>Serviços</h3>
+            <ul class="shot-links">
+                <li><a ng-click="appCtrl.goTo(checkout)" role="button">Anunciar</a></li>
+            </ul>
+        </div>
+        <div class="col-md-2 re-ft-grd">
+            <h3>Brafael</h3>
+            <ul class="shot-links">
+                <li><a ng-click="appCtrl.goTo(contato)" role="button">Contato</a></li>
+            </ul>
+        </div>
+        <div class="col-md-6 re-ft-grd">
+            <h3>Social</h3>
+            <ul class="social">
+                <li><a href="http://wwww.facebook.com" target="_blank" class="fb">facebook</a></li>
+                <li><a href="http://www.twitter.com" target="_blank" class="twt">twitter</a></li>
+                <li><a href="http://www.google.com/" target="_blank" class="gpls">google</a></li>
+                <div class="clearfix"></div>
+            </ul>
+        </div>
+<div class="clearfix"></div>
+    </div>
+    <div class="copy-rt">
+        <div class="container">
+    <p>&copy;   2017 - PCS 2044 - Rights Reserved. </a></p>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

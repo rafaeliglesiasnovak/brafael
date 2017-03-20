@@ -1,0 +1,23 @@
+<div class="cart-header">
+    <div class="close1"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></div>
+        <div class="cart-sec simpleCart_shelfItem">
+                <div class="cart-item cyc">
+                    <img src="{{produto.img}}" class="img-responsive" alt=""/>
+                </div>
+               <div class="cart-item-info" style="width:1000px">
+                    <ul class="qty">
+                        <li><p>Tamanho : {{produto.Tamanho_Prod}}</p></li>
+                        <li><p>Quantidade : <input type="number" ng-model="produto.Qtd_Prod" style="width: 35px;"> <button ng-click="salvar()">salvar</button></p></li>
+                        <li><p>Preço : {{produto.Produto.Preco_Prod}}</p></li>
+                        <li><img src="images/produto/{{produto.Produto.Imagem_Prod}}" style="width: 100px; height:100px;"></li>
+                        <li><button ng-click="deletar()">Delete</button>
+                    </ul>
+                    <div class="delivery">
+                         <p>Preço Total: {{produto.Qtd_Prod * produto.Produto.Preco_Prod}}</p>
+                         <div class="clearfix"></div>
+                    </div>	
+               </div>
+            <div class="clearfix"></div>
+    </div>
+</div>
+                 

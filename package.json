@@ -1,0 +1,23 @@
+{
+  "name": "RafaelShoes",
+  "version": "1.0.0",
+  "description": "Projeto de PCS2034",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Rafael Augusto Brandão (brandaorafael), Rafael Iglesias Novak (rafaeliglesiasnovak), Rafael Camargos Santos (rafaelcamargossantos)",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.13.3",
+    "cradle": "^0.6.9",
+    "ejs": "^2.3.4",
+    "express": "^4.13.3",
+    "lodash": "^4.13.1",
+    "method-override": "^2.3.5",
+    "morgan": "^1.6.1",
+    "multer": "^1.1.0",
+    "nodemailer": "^2.5.0",
+    "sequelize": "^3.23.4"
+  }
+}
