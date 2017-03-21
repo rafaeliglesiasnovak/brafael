@@ -3,6 +3,7 @@ module.exports = function (schema){
   var Orcamento = schema.Orcamento;
   var Msg_Cli = schema.Msg_Cli;
   var Item = schema.Item;
+  var Servico = schema.Servico;
 
   return {
     post: function (req, res) {
@@ -27,7 +28,7 @@ module.exports = function (schema){
 
         Item.bulkCreate(lista).then(function(){
           if(mensagem){
-            Msg_Cli.create({Orcamento_ID: orcamentoDB.Orcamento_ID, Texto: mensagem}).then(function(MsgDB){
+            Msg_Cli.create({Orcamento_ID: orcamentoDB.Orcamento_ID, Usuario_Origem:cpf, Texto: mensagem}).then(function(MsgDB){
               return res.json({success: true, message: "Orçamento criado com sucesso", data: orcamentoDB});
             });
           } else {
@@ -39,37 +40,24 @@ module.exports = function (schema){
 
     postMessage: function(req, res){
       var usuario = req.body.userID;
-      var usuarioDestino = req.body.userTo;
-      var servico = req.body.servicoID;
+      var orcamento = req.body.orcamentoID;
       var mensagem = req.body.mensagem;
 
-      Usuario.find({CPF_Usuario: usuario}).then(function(usuarioDB){
-        if(usuarioDB.Tipo_Usuario == 0){
-          MsgCli.create({CPF_Usuario: usuario,Servico_ID: servico,Texto: mensagem}).then(function(mensagemDB){
-            return res.json({success: true, message: 'Mensagem enviada com sucesso'});
-          });
-        } else if(usuarioDB.Tipo_Usuario == 2){
-          MsgPres.create({CPF_Usuario: usuario,Servico_ID: servico,Texto: mensagem}).then(function(mensagemDB){
-            return res.json({success: true, message: 'Mensagem enviada com sucesso'});
-          });
-        } else {
-          Usuario.find({CPF_Usuario: usuarioDestino}).then(function(usuarioDestinoDB){
-            if(usuarioDestinoDB.Tipo_Usuario == 0){
-              MsgCli.create({CPF_Usuario: usuario,Servico_ID: servico,Texto: mensagem}).then(function(mensagemDB){
-                return res.json({success: true, message: 'Mensagem enviada com sucesso'});
-              });
-            } else if(usuarioDestinoDB.Tipo_Usuario == 2){
-              MsgPres.create({CPF_Usuario: usuario,Servico_ID: servico,Texto: mensagem}).then(function(mensagemDB){
-                return res.json({success: true, message: 'Mensagem enviada com sucesso'});
-              });
-            }
-          });
-        }
+      Msg_Cli.create({Orcamento_ID: orcamento, Usuario_Origem:usuario, Texto: mensagem}).then(function(msgDB){
+        return res.json({success: true, message: "Mensagem enviada com sucesso", data: msgDB});
       });
     },
 
-    get: function(req, res){
-      var servico = req.body.servicoID;
+    getMessage: function(req, res){
+      var orcamento = req.query.orcamentoID;
+
+      Msg_Cli.findAll({where: {Orcamento_ID: orcamento}}).then(function(msgDB){
+        return res.json({success: true, message: "Mensagens encontradas com sucesso", data: msgDB});
+      });
+    },
+
+    get: function(req, res){ //Ainda não tem postman
+      var servico = req.query.servicoID;
 
       Orcamento.findAll({Servico_ID: servico}).then(function(orcamentos){
         return res.json({success: true, messagem: "Orçamentos encontrados", data: orcamentos});

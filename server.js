@@ -74,6 +74,7 @@ module.exports = function(){
 	schema.Item.belongsTo(schema.Orcamento, {foreignKey: 'Orcamento_ID', onDelete: 'CASCADE'});
 	//Msg_Cli
 	schema.Msg_Cli.belongsTo(schema.Orcamento, {foreignKey: 'Orcamento_ID', onDelete: 'CASCADE'});
+	schema.Msg_Cli.belongsTo(schema.Usuario, {foreignKey: 'CPF_Usuario', onDelete: 'CASCADE'});
 	//Orcamento_Individual
 	schema.Orcamento_Individual.belongsTo(schema.Orcamento, {foreignKey: 'Orcamento_ID', onDelete: 'CASCADE'});
 	schema.Orcamento_Individual.belongsTo(schema.Usuario, {foreignKey: 'CPF_Int', onDelete: 'CASCADE'});
@@ -81,6 +82,7 @@ module.exports = function(){
 	schema.Item_Pres.belongsTo(schema.Orcamento_Individual, {foreignKey: 'Orcamento_Individual_ID', onDelete: 'CASCADE'});
 	//Msg_Prestador
 	schema.Msg_Pres.belongsTo(schema.Orcamento_Individual, {foreignKey: 'Orcamento_Individual_ID', onDelete: 'CASCADE'});
+	schema.Msg_Pres.belongsTo(schema.Usuario, {foreignKey: 'CPF_Usuario', onDelete: 'CASCADE'});
 	//Habilidades
 	schema.Habilidades.belongsTo(schema.Usuario, {foreignKey: 'CPF_Pres', onDelete: 'CASCADE'});
 	//Msg_Prestador

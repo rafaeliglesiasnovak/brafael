@@ -10,7 +10,10 @@ module.exports = function (moduleOrcamento){
     	controllers.orcamento.get(req, res);
     });
     router.post("/orcamento/message", function(req, res){
-    	controllers.orcamento.postMessage(req, res);
+      controllers.orcamento.postMessage(req, res);
+    });
+    router.get("/orcamento/message", function(req, res){
+      controllers.orcamento.getMessage(req, res);
     });
   }
 
