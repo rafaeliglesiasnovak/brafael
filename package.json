@@ -17,6 +17,7 @@
     "method-override": "^2.3.5",
     "morgan": "^1.6.1",
     "multer": "^1.1.0",
+    "mysql": "^2.13.0",
     "node-boleto": "^2.0.2",
     "nodemailer": "^2.5.0",
     "sequelize": "^3.23.4"
