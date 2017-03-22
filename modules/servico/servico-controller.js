@@ -21,21 +21,24 @@ module.exports = function (schema){
         return res.json({success: true, message: "Serviço criado com sucesso", data: servicoDB});
       });
     },
+    get: function (req, res) {
+      var cpf = req.query.cpf;
+
+      Servico.findAll({where: {CPF_Cli: cpf}}).then(function(servicos){
+        return res.json({success: true, message: "Serviços encontrados", data: servicos});
+      });
+    },
     getPreco: function(req, res){
       var servicoID = req.query.servico;
 
       var preco = 0;
 
-      Servico.find({where: {Servico_ID: servicoID}}).then(function(servicoDB){
-        Orcamento.find({where: {Servico_ID: servicoID, Foi_Aprovado: true}}).then(function(orcamentoDB){
-          Item.findAll({where: {Orcamento_ID: orcamentoDB.Orcamento_ID}}).then(function(itens){
-            for(var i = 0; i < itens.length; i++){
-              preco += itens[i].Preco;
-            }
+      Orcamento.find({where: {Servico_ID: servicoID, Foi_Aprovado: true}, include: {model:Item}}).then(function(orcamentoDB){
+        for(var i = 0; i < orcamentoDB.Items.length; i++){
+          preco += orcamentoDB.Items[i].Preco;
+        }
 
-            return res.json({success: true, message: "Preço encontrado", data: preco});
-          });
-        });
+        return res.json({success: true, message: "Preço encontrado", data: preco});
       });
     }
   }

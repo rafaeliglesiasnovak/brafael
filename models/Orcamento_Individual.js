@@ -22,7 +22,9 @@ module.exports = function(Sequelize, sequelize, schema){
         model: Usuario,
         key: 'CPF_Usuario'
       }
-    }
+    },
+    Foi_Aprovado: Sequelize.BOOLEAN,
+    Foi_Pago: Sequelize.BOOLEAN
   });
 
 	return Orcamento_Individual;

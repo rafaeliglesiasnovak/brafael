@@ -18,7 +18,7 @@ module.exports = function (schema){
       var orcamento = {
         Servico_ID: servico,
         CPF_Int: cpf,
-        Foi_Aprovado: true //TODO Arrumar isso pelamordedeus
+        Foi_Aprovado: false
       }
 
       Orcamento.create(orcamento).then(function(orcamentoDB){
@@ -56,11 +56,19 @@ module.exports = function (schema){
       });
     },
 
-    get: function(req, res){ //Ainda não tem postman
+    get: function(req, res){
       var servico = req.query.servicoID;
 
       Orcamento.findAll({Servico_ID: servico}).then(function(orcamentos){
         return res.json({success: true, messagem: "Orçamentos encontrados", data: orcamentos});
+      })
+    },
+
+    aprovarOrcamento: function(req, res){
+      var orcamento = req.body.orcamentoID;
+
+      Orcamento.update({Foi_Aprovado: true}, {where: {Orcamento_ID: orcamento}}).then(function(orcamentoDB){
+        return res.json({success: true, messagem: "Orçamento aprovado", data: orcamentoDB});
       })
     }
   }

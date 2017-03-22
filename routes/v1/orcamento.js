@@ -15,6 +15,9 @@ module.exports = function (moduleOrcamento){
     router.get("/orcamento/message", function(req, res){
       controllers.orcamento.getMessage(req, res);
     });
+    router.post("/orcamento/aprovar", function(req, res){
+      controllers.orcamento.aprovarOrcamento(req, res);
+    });
   }
 
 }

@@ -67,22 +67,26 @@ module.exports = function(){
 	// Schema Associations
 	//Servico
 	schema.Servico.belongsTo(schema.Usuario, {foreignKey: 'CPF_Cli', onDelete: 'CASCADE'});
+	schema.Servico.hasMany(schema.Orcamento, {foreignKey: 'Servico_ID', onDelete: 'CASCADE'});
 	//Orçamento
 	schema.Orcamento.belongsTo(schema.Servico, {foreignKey: 'Servico_ID', onDelete: 'CASCADE'});
 	schema.Orcamento.belongsTo(schema.Usuario, {foreignKey: 'CPF_Int', onDelete: 'CASCADE'});
+	schema.Orcamento.hasMany(schema.Item, {foreignKey: 'Orcamento_ID', onDelete: 'CASCADE'});
+	schema.Orcamento.hasMany(schema.Orcamento_Individual, {foreignKey: 'Orcamento_ID', onDelete: 'CASCADE'});
 	//Item
 	schema.Item.belongsTo(schema.Orcamento, {foreignKey: 'Orcamento_ID', onDelete: 'CASCADE'});
 	//Msg_Cli
 	schema.Msg_Cli.belongsTo(schema.Orcamento, {foreignKey: 'Orcamento_ID', onDelete: 'CASCADE'});
-	schema.Msg_Cli.belongsTo(schema.Usuario, {foreignKey: 'Ususario_Origem', onDelete: 'CASCADE'});
+	schema.Msg_Cli.belongsTo(schema.Usuario, {foreignKey: 'Usuario_Origem', onDelete: 'CASCADE'});
 	//Orcamento_Individual
 	schema.Orcamento_Individual.belongsTo(schema.Orcamento, {foreignKey: 'Orcamento_ID', onDelete: 'CASCADE'});
 	schema.Orcamento_Individual.belongsTo(schema.Usuario, {foreignKey: 'CPF_Int', onDelete: 'CASCADE'});
+	schema.Orcamento_Individual.hasMany(schema.Item_Pres, {foreignKey: 'Orcamento_Individual_ID', onDelete: 'CASCADE'});
 	//Item_Prestador
 	schema.Item_Pres.belongsTo(schema.Orcamento_Individual, {foreignKey: 'Orcamento_Individual_ID', onDelete: 'CASCADE'});
 	//Msg_Prestador
 	schema.Msg_Pres.belongsTo(schema.Orcamento_Individual, {foreignKey: 'Orcamento_Individual_ID', onDelete: 'CASCADE'});
-	schema.Msg_Pres.belongsTo(schema.Usuario, {foreignKey: 'Ususario_Origem', onDelete: 'CASCADE'});
+	schema.Msg_Pres.belongsTo(schema.Usuario, {foreignKey: 'Usuario_Origem', onDelete: 'CASCADE'});
 	//Habilidades
 	schema.Habilidades.belongsTo(schema.Usuario, {foreignKey: 'CPF_Pres', onDelete: 'CASCADE'});
 	//Msg_Prestador
