@@ -15,7 +15,8 @@ module.exports = function(Sequelize, sequelize, schema){
       autoIncrement: false
     },
     Tempo: Sequelize.DOUBLE, // Segundos //
-    Esta_Pago:Sequelize.BOOLEAN
+    Esta_Pago:Sequelize.BOOLEAN,
+    Quando_Pago:Sequelize.DATE
   });
 
 	return Tempo_Uso;

@@ -67,7 +67,9 @@ module.exports = function (schema){
     aprovarOrcamento: function(req, res){
       var orcamento = req.body.orcamentoID;
 
-      Orcamento.update({Foi_Aprovado: true}, {where: {Orcamento_ID: orcamento}}).then(function(orcamentoDB){
+      var data_aprovado = new Date();
+
+      Orcamento.update({Foi_Aprovado: true, Quando_Aprovado: data_aprovado}, {where: {Orcamento_ID: orcamento}}).then(function(orcamentoDB){
         return res.json({success: true, messagem: "Orçamento aprovado", data: orcamentoDB});
       })
     }

@@ -58,7 +58,9 @@ module.exports = function (schema, boleto){
     intregradorConfirm: function(req, res){
       var servico = req.body.servicoID;
 
-      Servico.update({Esta_Pago:true}, {where:{Servico_ID: servico}}).then(function(servicos){
+      var data_pago = new Date();
+
+      Servico.update({Esta_Pago:true, Quando_Pago: data_pago}, {where:{Servico_ID: servico}}).then(function(servicos){
         return res.json({success: true, message: "Sevico atualizado", data: servicos});
       })
     }

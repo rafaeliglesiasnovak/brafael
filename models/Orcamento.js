@@ -23,7 +23,8 @@ module.exports = function(Sequelize, sequelize, schema){
         key: 'CPF_Usuario'
       }
     },
-    Foi_Aprovado: Sequelize.BOOLEAN
+    Foi_Aprovado: Sequelize.BOOLEAN,
+    Quando_Aprovado: Sequelize.DATE
   });
 
 	return Orcamento;
