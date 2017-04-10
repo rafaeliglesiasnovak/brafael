@@ -99,38 +99,66 @@ module.exports = function(){
 
 	  .sync({force: true})
 	  .then(function(err) {
-	  	var user = {CPF_Usuario: 1, Nome_Usuario: "Fet", Email_Usuario: "fet", Senha: 1, Nota: 0, Qtd_Avaliacao: 0, Tipo_Usuario: 0};
+			/* ====== populate ====== */
+			//==Usuarios
+	  	var users = [];
+		var names = ["Joao","Andre","Pedro","Ramires","Claudia","Alice","Maria",
+			"Bruno","Carlos","Rafael","Leticia","Laura","Renata","Mario", "Aline",
+			"Henrique", "Juliano", "Julia", "Mateus", "Priscila", "Monica", "Eduardo",
+			"Roberta", "Suzana", "Marilia", "Simone", "Larissa", "Rafaela", "Paula",
+			"Maiara", "Ines", "Diego", "Felipe", "Marcos", "Lucas", "Alex"];
+		var surnames = ["Silva","Oliveira","Snow","Machado","Cabral","Medeiros","Ribeiro",
+			"Duarte","Pereira","Correia","Novaes","Batista","Pinheiros","Luz", "Costa",
+			"Lima", "Mesquita", "Nunes", "Pires", "Martins", "Mendonca", "Vaz", "Carvalho",
+			"Mafra", "Santos", "Vasconcelos", "Dias", "Moraes", "Rocha", "Sales" ];
 
-	  	schema.Usuario.create(user).then(function(usuarioDB){
-	  		user.CPF_Usuario = 2;
-	  		user.Email_Usuario = "rice";
-	  		user.Tipo_Usuario = 1;
+		for (var i = 0; i < 300; i++) {
+			var name = names[Math.floor(Math.random() * names.length)] + ' ' +
+			surnames[Math.floor(Math.random() * surnames.length)];
+			var email = name.replace(/\s/g, '.').toLowerCase() + '@gmail.com';
+			var nota = Math.floor(Math.random() * 51 )/10;
+			var qntd = Math.floor(Math.random() * 200);
+			var tipo = Math.floor(Math.random() * 3);
+			var criadoEm = new Date() - Math.floor(Math.random()*2*365*24*60*60*1000); //past 2 years
+			users.push({CPF_Usuario: i, Nome_Usuario: name, Email_Usuario: email, Senha: 123,
+				Nota: nota, Qtd_Avaliacao: qntd, Tipo_Usuario: tipo, createdAt:criadoEm});
+		}
 
-	  		schema.Usuario.create(user).then(function(usuarioDB){
-		  		user.CPF_Usuario = 3;
-		  		user.Email_Usuario = "prig";
-		  		user.Tipo_Usuario = 2;
+	  	schema.Usuario.bulkCreate(users).then(function(usuarioDB){
+	  		//==Servicos
+  			var date = new Date();
+			var servicos = [];
 
-		  		schema.Usuario.create(user).then(function(usuarioDB){
-		  			var date = new Date();
+			for (var i = 0; i < 200; i++) {
+				var descricao = "Servico no. " + (i+1);
+				var cpf = Math.floor(Math.random() * users.length); //check how many users were created
+				var taTerminado = Math.floor(Math.random() * 2);
+				var taPago = Math.floor(Math.random() * 2);
 
-		  			var servico = {Data_Limite: date.setDate(date.getDate() + 5), Descricao: "Serviço teste", Esta_Finalizado: false, Esta_Pago: true, CPF_Cli: 1, Quando_Pago: date.setDate(date.getDate() - 2), Quando_Finalizado: date.setDate(date.getDate() - 4)};
+				var tempoAtras =  Math.floor(Math.random()*2*365*24*60*60*1000); //past 2 years
+				var criadoEm = new Date() - tempoAtras;
+				var dtLimite = criadoEm + Math.floor(Math.random() * tempoAtras);
+				var dtTermino = criadoEm + Math.floor(Math.random() * tempoAtras);
+				var dtPagamento = criadoEm + Math.floor(Math.random() * tempoAtras);
 
-		  			schema.Servico.create(servico).then(function(servicoDB){
-		  				var orcamento = {Servico_ID: 1, CPF_Int: 2, Foi_Aprovado: true};
+				servicos.push({Data_Limite: dtLimite, Descricao: descricao,Esta_Finalizado: taTerminado,
+					Esta_Pago: taPago, CPF_Cli: cpf, Quando_Pago: dtPagamento, Quando_Finalizado:dtTermino,
+					createdAt:criadoEm});
+			}
 
-		  				schema.Orcamento.create(orcamento).then(function(orcamentoDB){
-		  					var lista = [{Descricao: "Servico Integrador", Preco: 12.2, Orcamento_ID: 1},
-		  					{Descricao: "Locomoção", Preco: 100, Orcamento_ID: 1},
-		  					{Descricao: "Caçamba", Preco: 45, Orcamento_ID: 1}];
+			schema.Servico.bulkCreate(servicos).then(function(servicoDB){
+				var orcamento = {Servico_ID: 1, CPF_Int: 2, Foi_Aprovado: true};
 
-		  					schema.Item.bulkCreate(lista).then(function(){
-		  						console.log("Deu bom!!!");
-					        });
-		  				});
-		  			});
-			  	});
-		  	});
+				schema.Orcamento.create(orcamento).then(function(orcamentoDB){
+					var lista = [{Descricao: "Servico Integrador", Preco: 12.2, Orcamento_ID: 1},
+					{Descricao: "Locomoção", Preco: 100, Orcamento_ID: 1},
+					{Descricao: "Caçamba", Preco: 45, Orcamento_ID: 1}];
+
+					schema.Item.bulkCreate(lista).then(function(){
+						console.log("Deu bom!!!");
+		        	});
+				});
+  			});
 	  	});
 	  }, function (err) { 
 	    console.log('An error occurred while creating the table:', err);
@@ -182,6 +210,7 @@ module.exports = function(){
 	var gestao = {};
 	gestao.controllers = {};
 	gestao.controllers.pagamento = require(__dirname + '/modules/gestao/pagamento/gestao-pagamento-controller.js')(schema);
+	gestao.controllers.afiliacao = require(__dirname + '/modules/gestao/afiliacao/gestao-afiliacao-controller.js')(schema);
 
 	//Rotas
 	var routes = {};

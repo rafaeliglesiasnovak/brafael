@@ -9,6 +9,12 @@ module.exports = function (moduleGestao){
     router.get("/gestao/pagamento/pendente", function(req, res){
     	controllers.pagamento.pagPend(req, res);
     });
+    router.get("/gestao/afiliacao/range", function(req, res){
+    	controllers.afiliacao.clientesRange(req, res);
+    });
+    router.get("/gestao/afiliacao/data", function(req, res){
+    	controllers.afiliacao.clientesData(req, res);
+    });
   }
 
 }
