@@ -114,7 +114,7 @@ module.exports = function(){
 		  		schema.Usuario.create(user).then(function(usuarioDB){
 		  			var date = new Date();
 
-		  			var servico = {Data_Limite: date.setDate(date.getDate() + 5), Descricao: "Serviço teste", Esta_Finalizado: false, Esta_Pago: true, CPF_Cli: 1, Quando_Pago: date.setDate(date.getDate() - 2)};
+		  			var servico = {Data_Limite: date.setDate(date.getDate() + 5), Descricao: "Serviço teste", Esta_Finalizado: false, Esta_Pago: true, CPF_Cli: 1, Quando_Pago: date.setDate(date.getDate() - 2), Quando_Finalizado: date.setDate(date.getDate() - 4)};
 
 		  			schema.Servico.create(servico).then(function(servicoDB){
 		  				var orcamento = {Servico_ID: 1, CPF_Int: 2, Foi_Aprovado: true};

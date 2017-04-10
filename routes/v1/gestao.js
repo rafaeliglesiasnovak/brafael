@@ -6,6 +6,9 @@ module.exports = function (moduleGestao){
     router.get("/gestao/pagamento", function(req, res){
     	controllers.pagamento.pagInt(req, res);
     });
+    router.get("/gestao/pagamento/pendente", function(req, res){
+    	controllers.pagamento.pagPend(req, res);
+    });
   }
 
 }
