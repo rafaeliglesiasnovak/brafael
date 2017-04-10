@@ -1,8 +1,9 @@
 module.exports = function (schema){
-  var Servico = schema.Servico;
+  var Usuario = schema.Usuario;
 
   return {
-    pagInt: function(req, res){
+    clientesRange: function(req, res){
+
       var dataInicial = req.query.dat_ini;
       var dataFinal = req.query.dat_fin;
 
@@ -14,7 +15,7 @@ module.exports = function (schema){
 
       var diffDays = Math.ceil((dataFinal - dataInicial) / (1000 * 3600 * 24));
 
-      Servico.findAll({where: {Quando_Pago:{$gte: dataInicial, $lte: dataFinal}}}).then(function(servicoDB){
+      Usuario.findAll({where: {createdAt:{$gte: dataInicial, $lte: dataFinal}}}).then(function(usuarioDB){
 
         var x = [];
         var y = [];
@@ -24,9 +25,9 @@ module.exports = function (schema){
 
           var auxDate = new Date(new Date(dataInicial).getTime() + 60 * 60 * 24 * 1000 * i);
 
-          for(var j = 0; j < servicoDB.length; j++){
+          for(var j = 0; j < usuarioDB.length; j++){
 
-            if(auxDate.toDateString() == servicoDB[j].Quando_Pago.toDateString()){
+            if(auxDate.toDateString() == usuarioDB[j].createdAt.toDateString()){
               counter++;
             }
           }
@@ -34,18 +35,18 @@ module.exports = function (schema){
           x.push(auxDate);
           y.push(counter);
         }
-        return res.json({success: true, message: "Dados de pagamento achados", data: {x: x, y: y}});
+        return res.json({success: true, message: "Dados de afiliação achados", data: {x: x, y: y}});
       });
       
     },
-    pagPend: function(req, res){
+    clientesData: function(req, res){
       var data = req.query.data;
 
       data = data.slice(2, 4) + "/" + data.slice(0, 2) + "/" + data.slice(4, 8);
 
       data = new Date(data);
 
-      Servico.findAll({$or: [{Esta_Pago: false}, {Quando_Pago: {$gt: data}}]}).then(function(servicoDB){
+      Usuario.findAll({where:{createdAt: {$lte: data}}}).then(function(usuarioDB){
 
         var x = [];
         var y = [];
@@ -60,24 +61,24 @@ module.exports = function (schema){
           "0-2": 0
         }
 
-        for(var i = 0; i < servicoDB.length; i++){
-          if(Math.ceil((data - servicoDB[i].Quando_Finalizado) / (1000 * 3600 * 24)) >= 60){
+        for(var i = 0; i < usuarioDB.length; i++){
+          if(Math.ceil((data - usuarioDB[i].createdAt) / (1000 * 3600 * 24)) >= 60){
             graph["60+"]++;
-          } else if(Math.ceil((data - servicoDB[i].Quando_Finalizado) / (1000 * 3600 * 24)) >= 30){
+          } else if(Math.ceil((data - usuarioDB[i].createdAt) / (1000 * 3600 * 24)) >= 30){
             graph["30-60"]++;
-          } else if(Math.ceil((data - servicoDB[i].Quando_Finalizado) / (1000 * 3600 * 24)) >= 15){
+          } else if(Math.ceil((data - usuarioDB[i].createdAt) / (1000 * 3600 * 24)) >= 15){
             graph["15-30"]++;
-          } else if(Math.ceil((data - servicoDB[i].Quando_Finalizado) / (1000 * 3600 * 24)) >= 10){
+          } else if(Math.ceil((data - usuarioDB[i].createdAt) / (1000 * 3600 * 24)) >= 10){
             graph["10-15"]++;
-          } else if(Math.ceil((data - servicoDB[i].Quando_Finalizado) / (1000 * 3600 * 24)) >= 5){
+          } else if(Math.ceil((data - usuarioDB[i].createdAt) / (1000 * 3600 * 24)) >= 5){
             graph["5-10"]++;
-          } else if(Math.ceil((data - servicoDB[i].Quando_Finalizado) / (1000 * 3600 * 24)) >= 2){
+          } else if(Math.ceil((data - usuarioDB[i].createdAt) / (1000 * 3600 * 24)) >= 2){
             graph["2-5"]++;
-          } else if(Math.ceil((data - servicoDB[i].Quando_Finalizado) / (1000 * 3600 * 24)) >= 0){
+          } else if(Math.ceil((data - usuarioDB[i].createdAt) / (1000 * 3600 * 24)) >= 0){
             graph["0-2"]++;
           }
         }
-        return res.json({success: true, message: "Dados de pagamento achados", data: graph});
+        return res.json({success: true, message: "Dados de afiliação achados", data: graph});
       });
       
     }
