@@ -45,6 +45,8 @@ module.exports = function(){
 		.authenticate()
 		.then(function(err) {
 			console.log('Connection has been established successfully.');
+
+
 		})
 		.catch(function (err) {
 			console.log('Unable to connect to the database:', err);
@@ -95,20 +97,52 @@ module.exports = function(){
 
 	sequelize
 
-	  // .sync({force: true})
+	  .sync({force: true})
+	  .then(function(err) {
+	  	var user = {CPF_Usuario: 1, Nome_Usuario: "Fet", Email_Usuario: "fet", Senha: 1, Nota: 0, Qtd_Avaliacao: 0, Tipo_Usuario: 0};
+
+	  	schema.Usuario.create(user).then(function(usuarioDB){
+	  		user.CPF_Usuario = 2;
+	  		user.Email_Usuario = "rice";
+	  		user.Tipo_Usuario = 1;
+
+	  		schema.Usuario.create(user).then(function(usuarioDB){
+		  		user.CPF_Usuario = 3;
+		  		user.Email_Usuario = "prig";
+		  		user.Tipo_Usuario = 2;
+
+		  		schema.Usuario.create(user).then(function(usuarioDB){
+		  			var date = new Date();
+
+		  			var servico = {Data_Limite: date.setDate(date.getDate() + 5), Descricao: "Serviço teste", Esta_Finalizado: false, Esta_Pago: true, CPF_Cli: 1, Quando_Pago: date.setDate(date.getDate() - 2)};
+
+		  			schema.Servico.create(servico).then(function(servicoDB){
+		  				var orcamento = {Servico_ID: 1, CPF_Int: 2, Foi_Aprovado: true};
+
+		  				schema.Orcamento.create(orcamento).then(function(orcamentoDB){
+		  					var lista = [{Descricao: "Servico Integrador", Preco: 12.2, Orcamento_ID: 1},
+		  					{Descricao: "Locomoção", Preco: 100, Orcamento_ID: 1},
+		  					{Descricao: "Caçamba", Preco: 45, Orcamento_ID: 1}];
+
+		  					schema.Item.bulkCreate(lista).then(function(){
+		  						console.log("Deu bom!!!");
+					        });
+		  				});
+		  			});
+			  	});
+		  	});
+	  	});
+	  }, function (err) { 
+	    console.log('An error occurred while creating the table:', err);
+	  });
+
+	  
+	  // .sync()
 	  // .then(function(err) {
 	  //   console.log('It worked!');
 	  // }, function (err) { 
 	  //   console.log('An error occurred while creating the table:', err);
 	  // });
-
-	  
-	  .sync()
-	  .then(function(err) {
-	    console.log('It worked!');
-	  }, function (err) { 
-	    console.log('An error occurred while creating the table:', err);
-	  });
 
 	//Middleware
 	// var middleware = {};
@@ -144,6 +178,11 @@ module.exports = function(){
 	pagamento.controllers = {};
 	pagamento.controllers.pagamento = require(__dirname + '/modules/pagamento/pagamento-controller.js')(schema, app.boleto);
 
+	//Gestao
+	var gestao = {};
+	gestao.controllers = {};
+	gestao.controllers.pagamento = require(__dirname + '/modules/gestao/pagamento/gestao-pagamento-controller.js')(schema);
+
 	//Rotas
 	var routes = {};
 	routes.routes = require(__dirname + '/routes/router.js')(app.express, routes);
@@ -152,6 +191,7 @@ module.exports = function(){
 	routes.v1.cadastro = require(__dirname + '/routes/v1/cadastro.js')(cadastro);
 	routes.v1.servico = require(__dirname + '/routes/v1/servico.js')(servico);
 	routes.v1.pagamento = require(__dirname + '/routes/v1/pagamento.js')(pagamento);
+	routes.v1.gestao = require(__dirname + '/routes/v1/gestao.js')(gestao);
 	routes.view = {};
 	routes.view.view = require(__dirname + '/routes/view/view.js')(app.path);
 
