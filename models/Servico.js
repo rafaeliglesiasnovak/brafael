@@ -18,7 +18,9 @@ module.exports = function(Sequelize, sequelize, schema){
         model: Usuario,
         key: 'CPF_Usuario'
       } 
-    }
+    },
+    Quando_Finalizado: Sequelize.DATE,
+    Quando_Pago: Sequelize.DATE
   });
 
 	return Servico;

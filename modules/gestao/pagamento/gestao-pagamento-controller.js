@@ -1,66 +1,43 @@
 module.exports = function (schema, boleto){
   var Servico = schema.Servico;
-  var Orcamento = schema.Orcamento;
-  var Item = schema.Item;
-  var Usuario = schema.Usuario;
-  var Orcamento_Individual = schema.Orcamento_Individual;
-  var Item_Pres = schema.Item_Pres;
 
   return {
     pagInt: function(req, res){
-      var servicoID = req.query.servico;
+      var dataInicial = req.query.dat_ini;
+      var dataFinal = req.query.dat_fin;
 
-      var preco = 0;
+      dataInicial = dataInicial.slice(2, 4) + "/" + dataInicial.slice(0, 2) + "/" + dataInicial.slice(4, 8);
+      dataFinal = dataFinal.slice(2, 4) + "/" + dataFinal.slice(0, 2) + "/" + dataFinal.slice(4, 8);
 
-      Servico.find({where: {Servico_ID: servicoID}, include: [{model:Orcamento, where:{Foi_Aprovado: true}, include: [{model: Item}, {model:Usuario}, {model: Orcamento_Individual, include: [{model: Item_Pres}]}]}]}).then(function(servicoDB){
+      dataInicial = new Date(dataInicial);
+      dataFinal = new Date(dataFinal);
 
-        for(var i = 0; i < servicoDB.Orcamentos[0].Items.length; i++){
-          preco += servicoDB.Orcamentos[0].Items[i].Preco;
-        }
+      var diffDays = Math.ceil((dataFinal - dataInicial) / (1000 * 3600 * 24));
 
-        if(servicoDB.Orcamentos[0].Orcamento_Individuals[0]){
-          for(var i = 0; i < servicoDB.Orcamentos[0].Orcamento_Individuals[0].Item_Pres.length; i++){
-            preco += servicoDB.Orcamentos[0].Items[i].Preco;
+      Servico.findAll({where: {Quando_Pago:{$gte: dataInicial, $lte: dataFinal}}}).then(function(servicoDB){
+
+        console.log(dataInicial.toDateString());
+        console.log(servicoDB[0].Quando_Pago.toDateString());
+
+        var x = [];
+        var y = [];
+
+        for(var i = 0; i < diffDays; i++){
+          var counter = 0;
+          for(var j = 0; j < servicoDB.length; j++){
+            var auxDate = new Date(new Date(dataInicial).getTime() + 60 * 60 * 24 * 1000 * i);
+
+            if(auxDate.toDateString() == servicoDB[j].Quando_Pago.toDateString()){
+              counter++;
+            }
           }
+
+          x.push(auxDate);
+          y.push(counter);
         }
-
-        var Boleto = boleto.Boleto;
-
-        if(servicoDB.Orcamentos[0].Usuario.Banco == 1){
-          var banco = "santander";
-        } else {
-          var banco = "bradesco"
-        }
-
-        var bol = new Boleto({
-          'banco': banco, // nome do banco dentro da pasta 'banks'
-          'data_emissao': new Date(),
-          'data_vencimento': new Date(new Date().getTime() + 5 * 24 * 3600 * 1000), // 5 dias futuramente
-          'valor': preco*100, // R$ 15,00 (valor em centavos)
-          'nosso_numero': "1234567",
-          'numero_documento': "123123",
-          'cedente': servicoDB.Orcamentos[0].Usuario.Nome_Usuario,
-          'cedente_cnpj': servicoDB.Orcamentos[0].Usuario.CPF_Usuario, // sem pontos e traços
-          'agencia': servicoDB.Orcamentos[0].Usuario.Agencia,
-          'codigo_cedente': servicoDB.Orcamentos[0].Usuario.Conta, // PSK (código da carteira)
-          'carteira': "102"
-        });
-
-        console.log("Linha digitável: " + bol['linha_digitavel'])
-
-        bol.renderHTML(function(html){
-          return res.send(html);
-        });
+        return res.json({success: true, message: "Sevico atualizado", data: {x: x, y: y}});
       });
       
-    },
-
-    intregradorConfirm: function(req, res){
-      var servico = req.body.servicoID;
-
-      Servico.update({Esta_Pago:true}, {where:{Servico_ID: servico}}).then(function(servicos){
-        return res.json({success: true, message: "Sevico atualizado", data: servicos});
-      })
     }
   }
 }
