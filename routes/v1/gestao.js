@@ -15,6 +15,12 @@ module.exports = function (moduleGestao){
     router.get("/gestao/afiliacao/data", function(req, res){
     	controllers.afiliacao.clientesData(req, res);
     });
+    router.get("/gestao/servico", function(req, res){
+    	controllers.orcamento.servicoRange(req, res);
+    });
+    router.get("/gestao/orcamento", function(req, res){
+    	controllers.orcamento.orcamentoRange(req, res);
+    });
   }
 
 }
