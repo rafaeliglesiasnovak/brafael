@@ -99,8 +99,8 @@ module.exports = function(){
 
 	  .sync({force: true})
 	  .then(function(err) {
-			/* ====== populate ====== */
-			//==Usuarios
+	  	/* ====== populate ====== */
+	  	//==Usuarios
 	  	var users = [];
 		var names = ["Joao","Andre","Pedro","Ramires","Claudia","Alice","Maria",
 			"Bruno","Carlos","Rafael","Leticia","Laura","Renata","Mario", "Aline",
@@ -118,7 +118,7 @@ module.exports = function(){
 			var email = name.replace(/\s/g, '.').toLowerCase() + '@gmail.com';
 			var nota = Math.floor(Math.random() * 51 )/10;
 			var qntd = Math.floor(Math.random() * 200);
-			var tipo = Math.floor(Math.random() * 3);
+			var tipo = i%3;
 			var criadoEm = new Date() - Math.floor(Math.random()*2*365*24*60*60*1000); //past 2 years
 			users.push({CPF_Usuario: i, Nome_Usuario: name, Email_Usuario: email, Senha: 123,
 				Nota: nota, Qtd_Avaliacao: qntd, Tipo_Usuario: tipo, createdAt:criadoEm});
@@ -131,7 +131,7 @@ module.exports = function(){
 
 			for (var i = 0; i < 200; i++) {
 				var descricao = "Servico no. " + (i+1);
-				var cpf = Math.floor(Math.random() * users.length); //check how many users were created
+				var cpf = Math.floor(Math.random() * users.length/3)*3; //get only Cliente
 				var taTerminado = Math.floor(Math.random() * 2);
 				var taPago = Math.floor(Math.random() * 2);
 
@@ -147,16 +147,26 @@ module.exports = function(){
 			}
 
 			schema.Servico.bulkCreate(servicos).then(function(servicoDB){
-				var orcamento = {Servico_ID: 1, CPF_Int: 2, Foi_Aprovado: true};
+				var orcamentos = [];
 
-				schema.Orcamento.create(orcamento).then(function(orcamentoDB){
-					var lista = [{Descricao: "Servico Integrador", Preco: 12.2, Orcamento_ID: 1},
-					{Descricao: "Locomoção", Preco: 100, Orcamento_ID: 1},
-					{Descricao: "Caçamba", Preco: 45, Orcamento_ID: 1}];
+				for (var i = 0; i < 200; i++) {
+					var cpf = Math.floor(Math.random() * users.length/3)*3 + 1; //get only Integrador
+					var servico =  Math.floor(Math.random() * servicos.length) + 1;
+					var aprovado = Math.floor(Math.random() * 2);
+					var criadoEm = new Date() - Math.floor(Math.random()*2*365*24*60*60*1000); //past 2 years
+					orcamentos.push({Servico_ID: servico, CPF_Int: cpf,
+						Foi_Aprovado: aprovado, createdAt: criadoEm});
+				}
+
+
+				schema.Orcamento.bulkCreate(orcamentos).then(function(orcamentoDB){
+  					var lista = [{Descricao: "Servico Integrador", Preco: 12.2, Orcamento_ID: 1},
+						{Descricao: "Locomoção", Preco: 100, Orcamento_ID: 1},
+						{Descricao: "Caçamba", Preco: 45, Orcamento_ID: 1}];
 
 					schema.Item.bulkCreate(lista).then(function(){
 						console.log("Deu bom!!!");
-		        	});
+	        		});
 				});
   			});
 	  	});
@@ -211,6 +221,7 @@ module.exports = function(){
 	gestao.controllers = {};
 	gestao.controllers.pagamento = require(__dirname + '/modules/gestao/pagamento/gestao-pagamento-controller.js')(schema);
 	gestao.controllers.afiliacao = require(__dirname + '/modules/gestao/afiliacao/gestao-afiliacao-controller.js')(schema);
+	gestao.controllers.orcamento = require(__dirname + '/modules/gestao/orcamento/gestao-orcamento-controller.js')(schema);
 
 	//Rotas
 	var routes = {};
