@@ -9,6 +9,8 @@
     </div><!-- contact -->
 <div class="contact">
     <div class="container">
+        Data Inicial <input type="date" ng-model="dataInicial"><div style="margin-left: 50px; display: inline">Data Final <input type="date" ng-model="dataFinal"></div><button style="margin-left: 50px; display: inline" type="button" ng-click="gerarGrafico()">Gerar Gráfico</button>
+        <br><br>
         <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-series="series" chart-options="options" chart-dataset-override="datasetOverride" chart-click="onClick"></canvas>
     </div>
 </div>

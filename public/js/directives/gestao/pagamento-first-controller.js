@@ -12,33 +12,54 @@ app.directive('pagamentoFirst', ["$rootScope", "$http",
         $rootScope.viewFlag = id;
       }
 
-      // $http.get($rootScope.api + 'v1/gestao/pagamento?dat_ini=' + $scope.dataInicial + '&dat_fin=' + $scope.dataFInal)
-      $http.get($rootScope.api + 'v1/gestao/pagamento?dat_ini=01012017&dat_fin=15042017').
-        success(function(data){
-          console.log(data.data.x);
+      $scope.gerarGrafico = function(){
+        var month = ($scope.dataInicial.getMonth() + 1);
 
-          $scope.labels = data.data.x;
-          $scope.data = [
-            data.data.y
-          ];
-          $scope.onClick = function (points, evt) {
-            console.log(points, evt);
-          };
-          $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }];
-          $scope.options = {
-            scales: {
-              yAxes: [
-                {
-                  id: 'y-axis-1',
-                  type: 'linear',
-                  display: true,
-                  position: 'left'
-                }
-              ]
+        if(month < 10){
+          month = "0" + month;
+        }
+
+        var dataInicial = $scope.dataInicial.getDate() + month + $scope.dataInicial.getFullYear();
+
+        month = ($scope.dataFinal.getMonth() + 1);
+
+        if(month < 10){
+          month = "0" + month;
+        }
+
+        var dataFinal = $scope.dataFinal.getDate() + month + $scope.dataFinal.getFullYear();
+
+        $http.get($rootScope.api + 'v1/gestao/pagamento?dat_ini=' + dataInicial + '&dat_fin=' + dataFinal)
+          .success(function(data){
+
+            var x = [];
+
+            for(var i = 0; i < data.data.x.length; i++){
+              x.push((new Date(data.data.x[i])).toDateString());
             }
-          }
-        });
 
+            $scope.labels = x;
+            $scope.data = [
+              data.data.y
+            ];
+            $scope.onClick = function (points, evt) {
+              console.log(points, evt);
+            };
+            $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }];
+            $scope.options = {
+              scales: {
+                yAxes: [
+                  {
+                    id: 'y-axis-1',
+                    type: 'linear',
+                    display: true,
+                    position: 'left'
+                  }
+                ]
+              }
+            }
+          });
+      }
       
     },
     templateUrl: 'views/directives/pagamento/pagamentofirst.html'
