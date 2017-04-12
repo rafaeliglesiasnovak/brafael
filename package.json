@@ -9,6 +9,7 @@
   "author": "Rafael Augusto Brandão (brandaorafael), Rafael Iglesias Novak (rafaeliglesiasnovak), Rafael Camargos Santos (rafaelcamargossantos)",
   "license": "MIT",
   "dependencies": {
+    "angular-chart.js": "^1.1.1",
     "body-parser": "^1.13.3",
     "cradle": "^0.6.9",
     "ejs": "^2.3.4",
