@@ -2,6 +2,7 @@ angular.module('RafaelShoes', [
     'satellizer',
     'LocalStorageModule',
     'angular-md5',
+    'chart.js'
     ])
 
 .factory('sessionInjector', [function() {  
@@ -78,6 +79,7 @@ angular.module('RafaelShoes', [
     // constantes das paginas
     $rootScope.home = 1;
     $rootScope.gestao = 2;
+    $rootScope.pagamentoFirst = 3;
 
 
     $rootScope.addProduto = function(produto){
