@@ -26,6 +26,7 @@
     <script src="js/directives/produto/detalhe-controller.js"></script>
     <script src="js/directives/contato-controller.js"></script>
     <script src="js/directives/home-controller.js"></script>
+    <script src="js/directives/sprint2/gestao-controller.js"></script>
     
     <!-- services -->
     <script src="js/services/cadastro-service.js"></script>
@@ -85,7 +86,7 @@
                 </div>
             <div class="collapse navbar-collapse collapse-pdng" id="bs-example-navbar-collapse-1" style="margin: auto;">
                 <ul class="nav navbar-nav nav-font" style="padding-left: 135px;padding-top: 5px;">
-                    <li><a ng-click="appCtrl.goTo(carrinho)" role="button">Pagamento</a></li>
+                    <li><a ng-click="appCtrl.goTo(gestao)" role="button">Sprint 2</a></li>
                     <div class="clearfix"></div>
                 </ul>
                 <div class="clearfix"></div>
@@ -103,36 +104,7 @@
     </div>
     <!-- conteudo da pagina -->
     <home ng-if="viewFlag == 1"> </home>
-    <detalhe ng-if="viewFlag == 2"> </detalhe>
-    <login ng-if="viewFlag == 3"> </login>
-    <cadastro ng-if="viewFlag == 4"> </cadastro>
-    <produtos ng-if="viewFlag == 5"> </produtos>
-    <contato ng-if="viewFlag == 6"> </contato>
-    <carrinho ng-if="viewFlag == 7"> </carrinho>
-    <esquecisenha ng-if="viewFlag == 8"> </esquecisenha>
-    <minhaconta ng-if="viewFlag == 9"> </minhaconta>
-    <sobrerafael ng-if="viewFlag == 10"> </sobrerafael>
-    <adm ng-if="viewFlag == 11"> </adm>
-    <cadastrarproduto ng-if="viewFlag == 12"> </cadastrarproduto>
-    <buscarproduto ng-if="viewFlag == 13"> </buscarproduto>
-    <removerproduto ng-if="viewFlag == 14"> </removerproduto>
-    <alterarproduto ng-if="viewFlag == 15"> </alterarproduto>
-    <cadastrarfuncionario ng-if="viewFlag == 16"> </cadastrarfuncionario>
-    <buscarfuncionario ng-if="viewFlag == 17"> </buscarfuncionario>
-    <removerfuncionario ng-if="viewFlag == 18"> </removerfuncionario>
-    <alterarfuncionario ng-if="viewFlag == 19"> </alterarfuncionario>
-    <buscarcliente ng-if="viewFlag == 20"> </buscarcliente>
-    <removercliente ng-if="viewFlag == 21"> </removercliente>
-    <supervisor ng-if="viewFlag == 22"> </supervisor>
-    <funcionario ng-if="viewFlag == 23"> </funcionario>
-    <alterarcliente ng-if="viewFlag == 24"> </alterarcliente>
-    <meuspedidos ng-if="viewFlag == 25"> </meuspedidos>
-    <devolucao ng-if="viewFlag == 26"> </devolucao>
-    <checkout ng-if="viewFlag == 27"> </checkout>
-    <cadastrarendereco ng-if="viewFlag == 28"> </cadastrarendereco>
-    <alterarendereco ng-if="viewFlag == 29"> </alterarendereco>
-    <removerendereco ng-if="viewFlag == 30"> </removerendereco>
-    <enderecounico ng-if="viewFlag == 31"> </enderecounico>
+    <gestao ng-if="viewFlag == 2"> </gestao>
 
 
     <!-- Footer -->
