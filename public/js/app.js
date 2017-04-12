@@ -55,7 +55,7 @@ angular.module('RafaelShoes', [
 .controller("appController", ["$rootScope", "CarrinhoService", "localStorageService", "$http",  function($rootScope, CarinhoService, localStorageService, $http){
 	var appCtrl = this;
 
-	// $rootScope.api = "//localhost:3000/"
+	// $rootScope.api = "//localhost3000/"
     $rootScope.api = "//brafael.herokuapp.com/"
 
     if(localStorageService.get('home')){
@@ -88,9 +88,19 @@ angular.module('RafaelShoes', [
     $rootScope.orcamentoSecond = 7;
     $rootScope.afiliacaoSecond = 8;
 
+    $rootScope.login = 9;
+
 
     $rootScope.addProduto = function(produto){
         CarrinhoService.addProduto(produto);
+    }
+
+    appCtrl.verSeEstaLogado = function(){
+        if($rootScope.isLoged == true){
+            $rootScope.viewFlag = 3;
+        } else {
+            $rootScope.viewFlag = 9;
+        }
     }
 
     appCtrl.goTo = function(id){

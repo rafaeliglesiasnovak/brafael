@@ -1,0 +1,40 @@
+<div class="head-bread">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li><a ng-click="goTo(home)" role="button">Home</a></li>
+                <li class="active">Login</li>
+            </ol>
+        </div>
+    </div>
+<!--signup-->
+<!-- login-page -->
+<div class="login">
+    <div class="container">
+        <div class="login-grids">
+            <div class="col-md-6 log">
+                     <h3>Rafael Shoes Login</h3>
+                     <br>
+                     <div class="strip"></div>
+                     <form>
+                         <h5>Email:</h5>	
+                         <input type="text" value="" ng-model="email">
+                         <h5>Senha:</h5>
+                         <input type="password" value="" ng-model="senha"><br>					
+                         <input type="submit" value="Login" ng-click="login()">
+
+                     </form>
+                    <a ng-click="goTo(esquecisenha)" role="button">Esqueci minha senha</a>
+            </div>
+            <div class="col-md-6 login-right">
+                    <h3>Criar uma conta na Rafael Shoes</h3>
+                    <div class="strip"></div>
+                    <p>Crie uma conta na Rafael Shoes e aproveita as melhores ofertas de Tenis da Internet.</p>
+                    <a ng-click="goTo(cadastro)" role="button" class="button">Cadastrar</a>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</div>
+<!-- //login-page -->
+<!--signup-->
+
