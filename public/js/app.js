@@ -79,7 +79,13 @@ angular.module('RafaelShoes', [
     // constantes das paginas
     $rootScope.home = 1;
     $rootScope.gestao = 2;
+
     $rootScope.pagamentoFirst = 3;
+    $rootScope.orcamentoFirst = 4;
+    $rootScope.afiliacaoFirst = 5;
+    $rootScope.pagamentoSecond = 6;
+    $rootScope.orcamentoSecond = 7;
+    $rootScope.afiliacaoSecond = 8;
 
 
     $rootScope.addProduto = function(produto){

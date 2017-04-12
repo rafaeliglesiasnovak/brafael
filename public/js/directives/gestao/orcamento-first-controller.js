@@ -1,6 +1,6 @@
 var app = angular.module('RafaelShoes');
 
-app.directive('pagamentoFirst', ["$rootScope", "$http",
+app.directive('orcamentoFirst', ["$rootScope", "$http",
     function($rootScope, $http) {
   return {
     restrict: 'E',
@@ -42,7 +42,7 @@ app.directive('pagamentoFirst', ["$rootScope", "$http",
 
         var dataFinal = day + month + $scope.dataFinal.getFullYear();
 
-        $http.get($rootScope.api + 'v1/gestao/pagamento?dat_ini=' + dataInicial + '&dat_fin=' + dataFinal)
+        $http.get($rootScope.api + 'v1/gestao/servico?dat_ini=' + dataInicial + '&dat_fin=' + dataFinal)
           .success(function(data){
 
             var x = [];
@@ -75,6 +75,6 @@ app.directive('pagamentoFirst', ["$rootScope", "$http",
       }
       
     },
-    templateUrl: 'views/directives/pagamento/pagamentofirst.html'
+    templateUrl: 'views/directives/orcamento/orcamentofirst.html'
   };
 }]);

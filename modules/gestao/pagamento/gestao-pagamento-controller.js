@@ -47,37 +47,27 @@ module.exports = function (schema){
 
       Servico.findAll({$or: [{Esta_Pago: false}, {Quando_Pago: {$gt: data}}]}).then(function(servicoDB){
 
-        var x = [];
-        var y = [];
-
-        var graph = {
-          "60+": 0,
-          "30-60": 0,
-          "15-30": 0,
-          "10-15": 0,
-          "5-10": 0,
-          "2-5": 0,
-          "0-2": 0
-        }
+        var x = ["0-2 dias", "2-5 dias", "5-10 dias", "10-15 dias", "15-30 dias", "30-60 dias", "60+ dias"];
+        var y = [0, 0, 0, 0, 0, 0, 0];
 
         for(var i = 0; i < servicoDB.length; i++){
           if(Math.ceil((data - servicoDB[i].Quando_Finalizado) / (1000 * 3600 * 24)) >= 60){
-            graph["60+"]++;
+            y[6]++;
           } else if(Math.ceil((data - servicoDB[i].Quando_Finalizado) / (1000 * 3600 * 24)) >= 30){
-            graph["30-60"]++;
+            y[5]++;
           } else if(Math.ceil((data - servicoDB[i].Quando_Finalizado) / (1000 * 3600 * 24)) >= 15){
-            graph["15-30"]++;
+            y[4]++;
           } else if(Math.ceil((data - servicoDB[i].Quando_Finalizado) / (1000 * 3600 * 24)) >= 10){
-            graph["10-15"]++;
+            y[3]++;
           } else if(Math.ceil((data - servicoDB[i].Quando_Finalizado) / (1000 * 3600 * 24)) >= 5){
-            graph["5-10"]++;
+            y[2]++;
           } else if(Math.ceil((data - servicoDB[i].Quando_Finalizado) / (1000 * 3600 * 24)) >= 2){
-            graph["2-5"]++;
+            y[1]++;
           } else if(Math.ceil((data - servicoDB[i].Quando_Finalizado) / (1000 * 3600 * 24)) >= 0){
-            graph["0-2"]++;
+            y[0]++;
           }
         }
-        return res.json({success: true, message: "Dados de pagamento achados", data: graph});
+        return res.json({success: true, message: "Dados de pagamento achados", data: {x: x, y: y}});
       });
       
     }

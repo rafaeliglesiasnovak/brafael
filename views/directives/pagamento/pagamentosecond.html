@@ -1,0 +1,16 @@
+<div class="head-bread">
+        <div class="container">
+            <ol class="breadcrumb">
+                <li><a ng-click="goTo(home)" role="button">Home</a></li>
+                <li><a ng-click="goTo(gestao)" role="button">Gestao</a></li>
+                <li class="active">Tempo até pagamento ser efetuado</li>
+            </ol>
+        </div>
+    </div><!-- contact -->
+<div class="contact">
+    <div class="container">
+        Data <input type="date" ng-model="date"><button style="margin-left: 50px; display: inline" type="button" ng-click="gerarGrafico()">Gerar Gráfico</button>
+        <br><br>
+        <canvas id="bar" class="chart chart-bar" chart-data="data" chart-labels="labels" chart-series="series"></canvas>
+    </div>
+</div>

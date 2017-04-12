@@ -30,7 +30,13 @@
     <script src="js/directives/contato-controller.js"></script>
     <script src="js/directives/home-controller.js"></script>
     <script src="js/directives/sprint2/gestao-controller.js"></script>
+
     <script src="js/directives/gestao/pagamento-first-controller.js"></script>
+    <script src="js/directives/gestao/orcamento-first-controller.js"></script>
+    <script src="js/directives/gestao/afiliacao-first-controller.js"></script>
+    <script src="js/directives/gestao/pagamento-second-controller.js"></script>
+    <script src="js/directives/gestao/orcamento-second-controller.js"></script>
+    <script src="js/directives/gestao/afiliacao-second-controller.js"></script>
     
     <!-- services -->
     <script src="js/services/cadastro-service.js"></script>
@@ -109,7 +115,13 @@
     <!-- conteudo da pagina -->
     <home ng-if="viewFlag == 1"> </home>
     <gestao ng-if="viewFlag == 2"> </gestao>
+
     <pagamento-first ng-if="viewFlag == 3"> </pagamento-first>
+    <orcamento-first ng-if="viewFlag == 4"> </orcamento-first>
+    <afiliacao-first ng-if="viewFlag == 5"> </afiliacao-first>
+    <pagamento-second ng-if="viewFlag == 6"> </pagamento-second>
+    <orcamento-second ng-if="viewFlag == 7"> </orcamento-second>
+    <afiliacao-second ng-if="viewFlag == 8"> </afiliacao-second>
 
 
     <!-- Footer -->
