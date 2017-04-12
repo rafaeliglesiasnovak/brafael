@@ -11,7 +11,7 @@ app.directive('login', ['$rootScope', 'localStorageService', 'md5', 'LoginServic
       $scope.login = function(){
 
         if($scope.email == "admin@admin.com" && $scope.senha == "admin"){
-          $rootScope.viewFlag = 3;
+          $rootScope.viewFlag = 2;
         } else {
           window.alert("Falha no Login. Atenção ao usuário e senha");
         }   
