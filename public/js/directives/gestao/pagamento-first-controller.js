@@ -72,6 +72,8 @@ app.directive('pagamentoFirst', ["$rootScope", "$http",
               }
             }
           });
+
+            window.alert("Sua requisição demorou " + data.timestamp + " milissegundos e custou " + (data.timestamp*0.005) + " reais");
       }
       
     },

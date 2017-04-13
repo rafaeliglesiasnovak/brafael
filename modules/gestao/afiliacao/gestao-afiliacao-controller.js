@@ -3,6 +3,7 @@ module.exports = function (schema){
 
   return {
     clientesRange: function(req, res){
+      var timestamp = new Date();
 
       var dataInicial = req.query.dat_ini;
       var dataFinal = req.query.dat_fin;
@@ -35,11 +36,16 @@ module.exports = function (schema){
           x.push(auxDate);
           y.push(counter);
         }
-        return res.json({success: true, message: "Dados de afiliação achados", data: {x: x, y: y}});
+
+        timestamp = (new Date()) - timestamp;
+        
+        return res.json({success: true, message: "Dados de afiliação achados", timestamp: timestamp, data: {x: x, y: y}});
       });
       
     },
     clientesData: function(req, res){
+      var timestamp = new Date();
+
       var data = req.query.data;
 
       data = data.slice(2, 4) + "/" + data.slice(0, 2) + "/" + data.slice(4, 8);
@@ -68,7 +74,10 @@ module.exports = function (schema){
             y[0]++;
           }
         }
-        return res.json({success: true, message: "Dados de afiliação achados", data: {x: x, y: y}});
+
+        timestamp = (new Date()) - timestamp;
+
+        return res.json({success: true, message: "Dados de afiliação achados", timestamp: timestamp, data: {x: x, y: y}});
       });
       
     }

@@ -4,6 +4,7 @@ module.exports = function (schema){
 
   return {
     servicoRange: function(req, res){
+      var timestamp = new Date();
 
       var dataInicial = req.query.dat_ini;
       var dataFinal = req.query.dat_fin;
@@ -36,11 +37,15 @@ module.exports = function (schema){
           x.push(auxDate);
           y.push(counter);
         }
-        return res.json({success: true, message: "Dados de Serviço achados", data: {x: x, y: y}});
+
+        timestamp = (new Date()) - timestamp;
+
+        return res.json({success: true, message: "Dados de Serviço achados", timestamp: timestamp, data: {x: x, y: y}});
       });
       
     },
     orcamentoRange: function(req, res){
+      var timestamp = new Date();
 
       var dataInicial = req.query.dat_ini;
       var dataFinal = req.query.dat_fin;
@@ -73,7 +78,10 @@ module.exports = function (schema){
           x.push(auxDate);
           y.push(counter);
         }
-        return res.json({success: true, message: "Dados de Orçamento achados", data: {x: x, y: y}});
+
+        timestamp = (new Date()) - timestamp;
+        
+        return res.json({success: true, message: "Dados de Orçamento achados", timestamp: timestamp, data: {x: x, y: y}});
       });
       
     }
